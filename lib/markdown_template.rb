@@ -3,7 +3,7 @@ module ActionView
     class MarkdownTemplate < ERB
       def compile(template)
         src = super
-        "_markdown_proc = proc {\n#{src}\n}; RDiscount.new(_markdown_proc.call).to_html"
+        "_markdown_proc = proc {\n#{src}\n}; RDiscount.new(_markdown_proc.call).to_html.html_safe"
       end
 
       def cache_fragment(block, name = {}, options = nil) #:nodoc:
@@ -14,7 +14,7 @@ module ActionView
 
       private
       def render_markdown(result)
-        RDiscount.new(result).to_html
+        RDiscount.new(result).to_html.html_safe
       end
     end
   end
